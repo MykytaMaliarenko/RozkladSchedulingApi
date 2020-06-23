@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
     url(r'^api/v1/', include('djangoapps.groups.urls')),
+    url(r'^api/v1/', include('djangoapps.teachers.urls')),
 ]
