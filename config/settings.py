@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'djangoapps.groups',
     'djangoapps.teachers',
     'djangoapps.rooms',
+    'djangoapps.timeslots',
 ]
 
 MIDDLEWARE = [

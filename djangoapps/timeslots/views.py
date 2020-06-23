@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from rest_framework.viewsets import ReadOnlyModelViewSet
 
-# Create your views here.
+from djangoapps.timeslots.models import TimeSlot
+from djangoapps.timeslots.serializers import TimeSlotSerializer
+
+
+class TimeSlotsViewSet(ReadOnlyModelViewSet):
+    """
+        A simple ViewSet for viewing all time slots.
+    """
+
+    queryset = TimeSlot.objects.all()
+    serializer_class = TimeSlotSerializer
