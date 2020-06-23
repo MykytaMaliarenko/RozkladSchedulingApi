@@ -23,4 +23,5 @@ urlpatterns = [
 
     url(r'^api/v1/', include('djangoapps.groups.urls')),
     url(r'^api/v1/', include('djangoapps.teachers.urls')),
+    url(r'^api/v1/', include('djangoapps.rooms.urls')),
 ]

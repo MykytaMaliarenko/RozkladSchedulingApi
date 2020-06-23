@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'djangoapps.groups',
     'djangoapps.teachers',
+    'djangoapps.rooms',
 ]
 
 MIDDLEWARE = [
