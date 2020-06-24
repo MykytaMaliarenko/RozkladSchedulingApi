@@ -16,3 +16,15 @@ class ClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Class
         fields = "__all__"
+
+
+class ClassWithoutGroupSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Class model without Room """
+    teacher = TeacherSerializer()
+    room = RoomSerializer()
+    time_slot = TimeSlotSerializer()
+
+    class Meta:
+        model = Class
+        fields = ("id", "name", "type", "day_of_week", "week_number", "teacher",
+                  "room", "time_slot")
