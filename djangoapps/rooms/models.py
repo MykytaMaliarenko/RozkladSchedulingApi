@@ -9,7 +9,7 @@ class Room(models.Model):
 
     class Meta:
         db_table = "room"
-        ordering = ("-university_building",)
+        ordering = ("university_building",)
 
     def __repr__(self):
         return f"<Room id={self.id} room_name='{self.name}' university_building={self.university_building}>"
