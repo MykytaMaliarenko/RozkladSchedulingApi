@@ -3,7 +3,6 @@ from djangoapps.classes.models import Class
 from djangoapps.groups.serializers import GroupSerializer
 from djangoapps.rooms.serializers import RoomSerializer
 from djangoapps.teachers.serializers import TeacherSerializer
-from djangoapps.timeslots.serializers import TimeSlotSerializer
 
 
 class ClassSerializer(serializers.ModelSerializer):
@@ -11,7 +10,6 @@ class ClassSerializer(serializers.ModelSerializer):
     teacher = TeacherSerializer()
     room = RoomSerializer()
     group = GroupSerializer()
-    time_slot = TimeSlotSerializer()
 
     class Meta:
         model = Class
@@ -22,7 +20,6 @@ class ClassWithoutGroupSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Class model without Room """
     teacher = TeacherSerializer()
     room = RoomSerializer()
-    time_slot = TimeSlotSerializer()
 
     class Meta:
         model = Class
