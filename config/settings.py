@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ["*"]
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
     "http://192.168.1.27:3000",
+    "https://rozklad-scheduling.vercel.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
