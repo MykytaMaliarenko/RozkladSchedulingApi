@@ -18,5 +18,5 @@ class GroupSearchByNameList(generics.ListAPIView):
     serializer_class = GroupSerializer
 
     def get_queryset(self):
-        request = self.kwargs["searchRequest"]
-        return Group.objects.filter(name__contains=request)
+        request: str = self.kwargs["searchRequest"]
+        return Group.objects.filter(name__contains=request.lower())
