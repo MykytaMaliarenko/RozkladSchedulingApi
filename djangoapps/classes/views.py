@@ -6,7 +6,7 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 from djangoapps.classes.models import Class
 from djangoapps.groups.models import Group
 from djangoapps.classes.serializers import ClassSerializer, ClassWithoutGroupSerializer, \
-    RoomsClassesSerializer
+    RoomsClassesSerializer, ClassWithoutRoomSerializer
 from djangoapps.rooms.models import Room
 
 
@@ -65,5 +65,20 @@ class ClassesByBuildingList(generics.ListAPIView):
         try:
             building: int = int(self.kwargs["building"])
             return Room.objects.filter(university_building=building).prefetch_related("classes")
+        except ValueError:
+            raise ParseError
+
+
+class ClassesByRoom(generics.ListAPIView):
+    """
+        A list of classes by room.
+    """
+
+    serializer_class = ClassWithoutRoomSerializer
+
+    def get_queryset(self):
+        try:
+            room_id: int = int(self.kwargs["room"])
+            return Class.objects.filter(room_id=room_id).prefetch_related("teacher", "group")
         except ValueError:
             raise ParseError
