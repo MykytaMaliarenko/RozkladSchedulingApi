@@ -41,7 +41,7 @@ class ClassesByGroupList(generics.ListAPIView):
                 raise ParseError
 
         if group_id is not None:
-            classes = Class.objects.filter(group_id=group_id)
+            classes = Class.objects.filter(group_id=group_id).prefetch_related('group', 'room', 'teacher')
             if classes:
                 return classes
             else:
