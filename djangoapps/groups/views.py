@@ -19,4 +19,4 @@ class GroupSearchByNameList(generics.ListAPIView):
 
     def get_queryset(self):
         request: str = self.kwargs["searchRequest"]
-        return Group.objects.filter(name__contains=request.lower())
+        return Group.objects.filter(name__startswith=request.lower())[:10]

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from djangoapps.classes.models import Class
 from djangoapps.groups.serializers import GroupSerializer
+from djangoapps.rooms.models import Room
 from djangoapps.rooms.serializers import RoomSerializer
 from djangoapps.teachers.serializers import TeacherSerializer
 
@@ -17,7 +18,7 @@ class ClassSerializer(serializers.ModelSerializer):
 
 
 class ClassWithoutGroupSerializer(serializers.ModelSerializer):
-    """ Serializer to represent the Class model without Room """
+    """ Serializer to represent the Class model without Group """
     teacher = TeacherSerializer()
     room = RoomSerializer()
 
@@ -25,3 +26,32 @@ class ClassWithoutGroupSerializer(serializers.ModelSerializer):
         model = Class
         fields = ("id", "name", "type", "day_of_week", "week_number", "teacher",
                   "room", "time_slot")
+
+
+class ClassWithoutRoomSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Class model without Room """
+    teacher = TeacherSerializer()
+    group = GroupSerializer()
+
+    class Meta:
+        model = Class
+        fields = ("id", "name", "type", "day_of_week", "week_number", "teacher",
+                  "group", "time_slot")
+
+
+class RawClassSerializer(serializers.ModelSerializer):
+    """ Serializer to represent raw Class model without teacher, room, group """
+
+    class Meta:
+        model = Class
+        fields = ("id", "name", "type", "day_of_week", "week_number", "time_slot")
+
+
+class RoomsClassesSerializer(serializers.ModelSerializer):
+    """ Serializer to represent Room model and classes that take place in it """
+
+    classes = RawClassSerializer(many=True)
+
+    class Meta:
+        model = Room
+        fields = ("id", "name", "classes")

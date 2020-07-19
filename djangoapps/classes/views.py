@@ -1,12 +1,13 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models.query import QuerySet
-from rest_framework import generics, status
-from rest_framework.exceptions import APIException, NotFound, ParseError
+from rest_framework import generics
+from rest_framework.exceptions import NotFound, ParseError
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from djangoapps.classes.models import Class
 from djangoapps.groups.models import Group
-from djangoapps.classes.serializers import ClassSerializer, ClassWithoutGroupSerializer
+from djangoapps.classes.serializers import ClassSerializer, ClassWithoutGroupSerializer, \
+    RoomsClassesSerializer, ClassWithoutRoomSerializer
+from djangoapps.rooms.models import Room
 
 
 class ClassViewSet(ReadOnlyModelViewSet):
@@ -40,7 +41,7 @@ class ClassesByGroupList(generics.ListAPIView):
                 raise ParseError
 
         if group_id is not None:
-            classes = Class.objects.filter(group_id=group_id)
+            classes = Class.objects.filter(group_id=group_id).prefetch_related('group', 'room', 'teacher')
             if classes:
                 return classes
             else:
@@ -51,3 +52,33 @@ class ClassesByGroupList(generics.ListAPIView):
                 return Class.objects.filter(group_id=group.id)
             except ObjectDoesNotExist:
                 raise NotFound
+
+
+class ClassesByBuildingList(generics.ListAPIView):
+    """
+        A list of classes by rooms in building.
+    """
+
+    serializer_class = RoomsClassesSerializer
+
+    def get_queryset(self):
+        try:
+            building: int = int(self.kwargs["building"])
+            return Room.objects.filter(university_building=building).prefetch_related("classes")
+        except ValueError:
+            raise ParseError
+
+
+class ClassesByRoom(generics.ListAPIView):
+    """
+        A list of classes by room.
+    """
+
+    serializer_class = ClassWithoutRoomSerializer
+
+    def get_queryset(self):
+        try:
+            room_id: int = int(self.kwargs["room"])
+            return Class.objects.filter(room_id=room_id).prefetch_related("teacher", "group")
+        except ValueError:
+            raise ParseError
