@@ -6,7 +6,7 @@ from django.db import models
 class Group(models.Model):
     """ Group Model """
     id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=15)
+    name = models.CharField(max_length=50)
 
     class Meta:
         db_table = "group"
