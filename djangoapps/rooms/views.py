@@ -1,5 +1,7 @@
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from rest_framework import generics
+from rest_framework.exceptions import ParseError
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from djangoapps.rooms.models import Room
@@ -26,3 +28,18 @@ class RoomsBuildingsViewSet(ReadOnlyModelViewSet):
     @method_decorator(cache_page(10 * 60))
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
+
+
+class RoomsInBuildingList(generics.ListAPIView):
+    """
+        A list of all room in building.
+    """
+
+    serializer_class = RoomSerializer
+
+    def get_queryset(self):
+        try:
+            building = int(self.kwargs['building'])
+            return Room.objects.filter(university_building=building)
+        except ValueError:
+            raise ParseError
