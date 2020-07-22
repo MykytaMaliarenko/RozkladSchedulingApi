@@ -15,7 +15,7 @@ class Class(models.Model):
     week_number = models.IntegerField()
 
     room = models.ForeignKey(Room, related_name="classes", on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, related_name="classes", on_delete=models.CASCADE)
+    groups = models.ManyToManyField(Group, related_name="classes")
     teacher = models.ForeignKey(Teacher, related_name="classes", on_delete=models.CASCADE)
     time_slot = models.ForeignKey(TimeSlot, related_name="classes", on_delete=models.CASCADE)
 
