@@ -41,7 +41,7 @@ class ClassesByGroupList(generics.ListAPIView):
                 raise ParseError
 
         if group_id is not None:
-            classes = Class.objects.filter(group_id=group_id).prefetch_related('group', 'room', 'teacher')
+            classes = Class.objects.filter(groups__id=group_id).prefetch_related('groups', 'room', 'teacher')
             if classes:
                 return classes
             else:
@@ -49,7 +49,7 @@ class ClassesByGroupList(generics.ListAPIView):
         else:
             try:
                 group: Group = Group.objects.get(name=group_name)
-                return Class.objects.filter(group_id=group.id)
+                return Class.objects.filter(groups__id=group.id)
             except ObjectDoesNotExist:
                 raise NotFound
 
@@ -79,7 +79,7 @@ class ClassesByRoom(generics.ListAPIView):
     def get_queryset(self):
         try:
             room_id: int = int(self.kwargs["room"])
-            return Class.objects.filter(room_id=room_id).prefetch_related("teacher", "group")
+            return Class.objects.filter(room_id=room_id).prefetch_related("teacher", "groups")
         except ValueError:
             raise ParseError
 
@@ -94,6 +94,6 @@ class ClassesByTeacher(generics.ListAPIView):
     def get_queryset(self):
         try:
             teacher_id: int = int(self.kwargs["teacher"])
-            return Class.objects.filter(teacher_id=teacher_id).prefetch_related("room", "group")
+            return Class.objects.filter(teacher_id=teacher_id).prefetch_related("room", "groups")
         except ValueError:
             raise ParseError

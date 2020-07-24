@@ -10,7 +10,7 @@ class ClassSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Class model """
     teacher = TeacherSerializer()
     room = RoomSerializer()
-    group = GroupSerializer()
+    groups = GroupSerializer(many=True, read_only=True)
 
     class Meta:
         model = Class
@@ -31,23 +31,23 @@ class ClassWithoutGroupSerializer(serializers.ModelSerializer):
 class ClassWithoutRoomSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Class model without Room """
     teacher = TeacherSerializer()
-    group = GroupSerializer()
+    groups = GroupSerializer(many=True, read_only=True)
 
     class Meta:
         model = Class
         fields = ("id", "name", "type", "day_of_week", "week_number", "teacher",
-                  "group", "time_slot")
+                  "groups", "time_slot")
 
 
 class ClassWithoutTeacherSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Class model without Teacher """
     room = RoomSerializer()
-    group = GroupSerializer()
+    groups = GroupSerializer(many=True, read_only=True)
 
     class Meta:
         model = Class
         fields = ("id", "name", "type", "day_of_week", "week_number", "room",
-                  "group", "time_slot")
+                  "groups", "time_slot")
 
 
 class RawClassSerializer(serializers.ModelSerializer):
