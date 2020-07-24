@@ -17,12 +17,12 @@ class RoomsViewSet(ReadOnlyModelViewSet):
     serializer_class = RoomSerializer
 
 
-class RoomsBuildingsViewSet(ReadOnlyModelViewSet):
+class BuildingsViewSet(ReadOnlyModelViewSet):
     """
         A simple ViewSet for viewing of all buildings.
     """
 
-    queryset = Room.objects.distinct('university_building')
+    queryset = Room.objects.values('university_building').distinct().all()
     serializer_class = RoomBuildingOnlySerializer
 
     @method_decorator(cache_page(10 * 60))

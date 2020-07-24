@@ -2,10 +2,10 @@ from rest_framework import routers
 from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from djangoapps.rooms.views import RoomsViewSet, RoomsBuildingsViewSet, \
+from djangoapps.rooms.views import RoomsViewSet, BuildingsViewSet, \
     RoomsInBuildingList
 
-buildings_list = RoomsBuildingsViewSet.as_view({
+buildings_list = BuildingsViewSet.as_view({
     "get": "list",
 })
 
