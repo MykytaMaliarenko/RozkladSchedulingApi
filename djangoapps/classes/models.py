@@ -26,5 +26,5 @@ class Class(models.Model):
         short_name = self.name[:10] + "..." if len(self.name) > 10 else self.name
 
         return f"<Class id={self.id} name='{short_name}' class_type='{self.type}' " \
-               f"room_id={self.room_id} teacher_id={self.teacher_id} group_id={self.group_id} " \
+               f"room_id={self.room_id} teacher_id={self.teacher_id} " \
                f"day_of_week={self.day_of_week} week_number={self.week_number} class_time_id={self.time_slot_id}>"
