@@ -20,4 +20,4 @@ class RoomBuildingOnlySerializer(serializers.ModelSerializer):
         fields = ("university_building",)
 
     def to_representation(self, instance: Room):
-        return instance.university_building
+        return instance['university_building']
