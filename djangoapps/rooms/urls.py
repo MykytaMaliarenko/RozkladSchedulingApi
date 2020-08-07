@@ -1,9 +1,8 @@
 from rest_framework import routers
 from django.conf.urls import url, include
-from rest_framework.urlpatterns import format_suffix_patterns
 
 from djangoapps.rooms.views import RoomsViewSet, BuildingsViewSet, \
-    RoomsInBuildingList
+    RoomsInBuildingList, EmptyRoomsInBuildingList
 
 buildings_list = BuildingsViewSet.as_view({
     "get": "list",
@@ -17,6 +16,9 @@ urlpatterns = [
 
     url(r'^rooms/building/(?P<building>\d+)$',
         RoomsInBuildingList.as_view(), name="rooms-in-building"),
+
+    url(r'^rooms/free/building/(?P<building>\d+)$',
+        EmptyRoomsInBuildingList.as_view(), name="empty-rooms-in-building"),
 
     url(r'', include(router.urls)),
 ]
