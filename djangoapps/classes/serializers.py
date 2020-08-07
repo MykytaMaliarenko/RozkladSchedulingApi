@@ -56,13 +56,3 @@ class RawClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Class
         fields = ("id", "name", "type", "day_of_week", "week_number", "time_slot")
-
-
-class RoomsClassesSerializer(serializers.ModelSerializer):
-    """ Serializer to represent Room model and classes that take place in it """
-
-    classes = RawClassSerializer(many=True)
-
-    class Meta:
-        model = Room
-        fields = ("id", "name", "classes")
